@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Students - Attendance Management System</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app-container">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h2>AMS</h2>
+                <button class="sidebar-toggle" id="sidebarToggle">☰</button>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="index.html" class="nav-item">
+                    <span class="nav-icon">📊</span>
+                    <span class="nav-text">Dashboard</span>
+                </a>
+                <a href="students.html" class="nav-item active">
+                    <span class="nav-icon">👥</span>
+                    <span class="nav-text">Students</span>
+                </a>
+                <a href="attendance.html" class="nav-item">
+                    <span class="nav-icon">✓</span>
+                    <span class="nav-text">Attendance</span>
+                </a>
+                <a href="reports.html" class="nav-item">
+                    <span class="nav-icon">📈</span>
+                    <span class="nav-text">Reports</span>
+                </a>
+                <a href="classes.html" class="nav-item">
+                    <span class="nav-icon">🏫</span>
+                    <span class="nav-text">Classes</span>
+                </a>
+            </nav>
+            <div class="sidebar-footer">
+                <button class="theme-toggle" id="themeToggle">🌙</button>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="top-header">
+                <div class="header-content">
+                    <h1>Manage Students</h1>
+                    <div class="header-actions">
+                        <input type="text" id="searchStudent" placeholder="Search by name or roll..." class="search-input">
+                        <select id="classFilterStudents" class="class-filter">
+                            <option value="">All Classes</option>
+                        </select>
+                    </div>
+                </div>
+            </header>
+
+            <div class="content-area">
+                <div class="add-student-section">
+                    <h3>Add New Student</h3>
+                    <div class="student-form">
+                        <div class="form-row">
+                            <input type="text" id="studentName" placeholder="Full Name" required>
+                            <input type="text" id="studentRoll" placeholder="Roll Number" required>
+                        </div>
+                        <div class="form-row">
+                            <select id="studentGender" required>
+                                <option value="">Select Gender</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Other">Other</option>
+                            </select>
+                            <input type="date" id="studentDOB" placeholder="Date of Birth" required>
+                        </div>
+                        <div class="form-row">
+                            <input type="tel" id="parentContact" placeholder="Parent's Contact Number" required>
+                            <select id="studentClass" required>
+                                <option value="">Select Class</option>
+                            </select>
+                        </div>
+                        <div class="form-row">
+                            <input type="file" id="studentPhoto" accept="image/*" class="file-input">
+                            <button id="addStudentBtn" class="btn btn-primary">Add Student</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="students-list">
+                    <h3>Registered Students</h3>
+                    <div id="studentsTable">
+                        <div class="no-students" id="noStudents">
+                            <p>No students registered yet. Add your first student above.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div id="editModal" class="modal">
+        <div class="modal-content large-modal">
+            <span class="close">&times;</span>
+            <h3>Edit Student</h3>
+            <div class="edit-form">
+                <div class="form-row">
+                    <input type="text" id="editStudentName" placeholder="Full Name" required>
+                    <input type="text" id="editStudentRoll" placeholder="Roll Number" required>
+                </div>
+                <div class="form-row">
+                    <select id="editStudentGender" required>
+                        <option value="">Select Gender</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Other">Other</option>
+                    </select>
+                    <input type="date" id="editStudentDOB" required>
+                </div>
+                <div class="form-row">
+                    <input type="tel" id="editParentContact" placeholder="Parent's Contact" required>
+                    <select id="editStudentClass" required>
+                        <option value="">Select Class</option>
+                    </select>
+                </div>
+                <div class="form-row">
+                    <input type="file" id="editStudentPhoto" accept="image/*" class="file-input">
+                    <div class="current-photo" id="currentPhoto"></div>
+                </div>
+                <div class="modal-actions">
+                    <button id="saveEditBtn" class="btn btn-primary">Save Changes</button>
+                    <button id="cancelEditBtn" class="btn btn-secondary">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="notification" class="notification"></div>
+
+    <script src="students.js"></script>
+</body>
+</html>

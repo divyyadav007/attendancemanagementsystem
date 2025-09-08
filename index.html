@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attendance Management System</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Added dark mode toggle and sidebar navigation -->
+    <div class="app-container">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h2>AMS</h2>
+                <button class="sidebar-toggle" id="sidebarToggle">☰</button>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="index.html" class="nav-item active">
+                    <span class="nav-icon">📊</span>
+                    <span class="nav-text">Dashboard</span>
+                </a>
+                <a href="students.html" class="nav-item">
+                    <span class="nav-icon">👥</span>
+                    <span class="nav-text">Students</span>
+                </a>
+                <a href="attendance.html" class="nav-item">
+                    <span class="nav-icon">✓</span>
+                    <span class="nav-text">Attendance</span>
+                </a>
+                <a href="reports.html" class="nav-item">
+                    <span class="nav-icon">📈</span>
+                    <span class="nav-text">Reports</span>
+                </a>
+                <a href="classes.html" class="nav-item">
+                    <span class="nav-icon">🏫</span>
+                    <span class="nav-text">Classes</span>
+                </a>
+            </nav>
+            <div class="sidebar-footer">
+                <button class="theme-toggle" id="themeToggle">🌙</button>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="top-header">
+                <div class="header-content">
+                    <h1>Dashboard</h1>
+                    <div class="header-actions">
+                        <select id="classFilter" class="class-filter">
+                            <option value="">All Classes</option>
+                        </select>
+                    </div>
+                </div>
+            </header>
+
+            <div class="content-area">
+                <div class="welcome-section">
+                    <h2>Welcome to the Attendance Management System</h2>
+                    <p>Manage student attendance efficiently and generate comprehensive reports.</p>
+                </div>
+
+                <div class="dashboard-grid">
+                    <div class="stats-overview">
+                        <div class="stat-card">
+                            <div class="stat-icon">👥</div>
+                            <div class="stat-info">
+                                <span class="stat-number" id="totalStudents">0</span>
+                                <span class="stat-label">Total Students</span>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">✅</div>
+                            <div class="stat-info">
+                                <span class="stat-number" id="presentToday">0</span>
+                                <span class="stat-label">Present Today</span>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">❌</div>
+                            <div class="stat-info">
+                                <span class="stat-number" id="absentToday">0</span>
+                                <span class="stat-label">Absent Today</span>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">⏰</div>
+                            <div class="stat-info">
+                                <span class="stat-number" id="lateToday">0</span>
+                                <span class="stat-label">Late Today</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="quick-actions">
+                        <h3>Quick Actions</h3>
+                        <div class="action-buttons">
+                            <a href="attendance.html" class="btn btn-primary">Mark Today's Attendance</a>
+                            <a href="reports.html" class="btn btn-secondary">View Reports</a>
+                            <a href="students.html" class="btn btn-secondary">Manage Students</a>
+                        </div>
+                    </div>
+
+                    <div class="recent-activity">
+                        <h3>Recent Activity</h3>
+                        <div id="recentActivity" class="activity-list">
+                            <p class="no-activity">No recent activity</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="dashboard.js"></script>
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Classes - Attendance Management System</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app-container">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h2>AMS</h2>
+                <button class="sidebar-toggle" id="sidebarToggle">☰</button>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="index.html" class="nav-item">
+                    <span class="nav-icon">📊</span>
+                    <span class="nav-text">Dashboard</span>
+                </a>
+                <a href="students.html" class="nav-item">
+                    <span class="nav-icon">👥</span>
+                    <span class="nav-text">Students</span>
+                </a>
+                <a href="attendance.html" class="nav-item">
+                    <span class="nav-icon">✓</span>
+                    <span class="nav-text">Attendance</span>
+                </a>
+                <a href="reports.html" class="nav-item">
+                    <span class="nav-icon">📈</span>
+                    <span class="nav-text">Reports</span>
+                </a>
+                <a href="classes.html" class="nav-item active">
+                    <span class="nav-icon">🏫</span>
+                    <span class="nav-text">Classes</span>
+                </a>
+            </nav>
+            <div class="sidebar-footer">
+                <button class="theme-toggle" id="themeToggle">🌙</button>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="top-header">
+                <div class="header-content">
+                    <h1>Manage Classes</h1>
+                </div>
+            </header>
+
+            <div class="content-area">
+                <div class="add-class-section">
+                    <div class="form-group">
+                        <input type="text" id="className" placeholder="Enter class name (e.g., Class 10-A)" maxlength="50">
+                        <button id="addClassBtn" class="btn btn-primary">Add Class</button>
+                    </div>
+                </div>
+
+                <div class="classes-list">
+                    <h3>Available Classes</h3>
+                    <div id="classesTable">
+                        <div class="no-classes" id="noClasses">
+                            <p>No classes created yet. Add your first class above.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div id="editClassModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h3>Edit Class</h3>
+            <input type="text" id="editClassName" placeholder="Class name">
+            <div class="modal-actions">
+                <button id="saveClassEditBtn" class="btn btn-primary">Save Changes</button>
+                <button id="cancelClassEditBtn" class="btn btn-secondary">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="notification" class="notification"></div>
+
+    <script src="classes.js"></script>
+</body>
+</html>

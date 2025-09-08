@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mark Attendance - Attendance Management System</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app-container">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h2>AMS</h2>
+                <button class="sidebar-toggle" id="sidebarToggle">☰</button>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="index.html" class="nav-item">
+                    <span class="nav-icon">📊</span>
+                    <span class="nav-text">Dashboard</span>
+                </a>
+                <a href="students.html" class="nav-item">
+                    <span class="nav-icon">👥</span>
+                    <span class="nav-text">Students</span>
+                </a>
+                <a href="attendance.html" class="nav-item active">
+                    <span class="nav-icon">✓</span>
+                    <span class="nav-text">Attendance</span>
+                </a>
+                <a href="reports.html" class="nav-item">
+                    <span class="nav-icon">📈</span>
+                    <span class="nav-text">Reports</span>
+                </a>
+                <a href="classes.html" class="nav-item">
+                    <span class="nav-icon">🏫</span>
+                    <span class="nav-text">Classes</span>
+                </a>
+            </nav>
+            <div class="sidebar-footer">
+                <button class="theme-toggle" id="themeToggle">🌙</button>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="top-header">
+                <div class="header-content">
+                    <h1>Mark Attendance</h1>
+                    <div class="header-actions">
+                        <input type="date" id="attendanceDate" class="date-input">
+                        <select id="classFilterAttendance" class="class-filter">
+                            <option value="">All Classes</option>
+                        </select>
+                    </div>
+                </div>
+            </header>
+
+            <div class="content-area">
+                <div class="attendance-controls">
+                    <div class="bulk-actions">
+                        <button id="markAllPresentBtn" class="btn btn-success">Mark All Present</button>
+                        <button id="markAllAbsentBtn" class="btn btn-danger">Mark All Absent</button>
+                        <button id="saveAttendanceBtn" class="btn btn-primary">Save Attendance</button>
+                    </div>
+                    <div class="view-toggle">
+                        <button id="listViewBtn" class="btn btn-secondary active">List View</button>
+                        <button id="calendarViewBtn" class="btn btn-secondary">Calendar View</button>
+                    </div>
+                </div>
+
+                <div id="listView" class="attendance-section">
+                    <div id="attendanceTable">
+                        <div class="no-students" id="noStudentsMessage">
+                            <p>No students found. Please <a href="students.html">add students</a> first.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="calendarView" class="calendar-section" style="display: none;">
+                    <div class="calendar-header">
+                        <button id="prevMonth" class="btn btn-secondary">‹</button>
+                        <h3 id="currentMonth"></h3>
+                        <button id="nextMonth" class="btn btn-secondary">›</button>
+                    </div>
+                    <div id="calendar" class="calendar-grid"></div>
+                    <div class="calendar-legend">
+                        <div class="legend-item">
+                            <span class="legend-color present"></span>
+                            <span>Present</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-color absent"></span>
+                            <span>Absent</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-color late"></span>
+                            <span>Late</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div id="notification" class="notification"></div>
+
+    <script src="attendance.js"></script>
+</body>
+</html>
