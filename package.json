@@ -1,4 +1,5 @@
 {
+  "//": "A basic package.json for project metadata. No dependencies are currently managed here.",
   "name": "my-v0-project",
   "version": "0.1.0",
   "private": true,

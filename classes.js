@@ -2,13 +2,18 @@
 let classes = []
 let editingClassId = null
 
+/**
+ * Initializes the classes page after the DOM is fully loaded.
+ */
 document.addEventListener("DOMContentLoaded", () => {
   loadClasses()
   setupEventListeners()
-  initializeTheme()
   setupSidebar()
-})
+});
 
+/**
+ * Sets up all event listeners for the classes page.
+ */
 function setupEventListeners() {
   document.getElementById("addClassBtn").addEventListener("click", addClass)
   document.getElementById("className").addEventListener("keypress", (e) => {
@@ -31,15 +36,24 @@ function setupEventListeners() {
   })
 }
 
+/**
+ * Loads the list of classes from localStorage and renders them.
+ */
 function loadClasses() {
   classes = JSON.parse(localStorage.getItem("classes") || "[]")
   renderClasses()
 }
 
+/**
+ * Saves the current list of classes to localStorage.
+ */
 function saveClasses() {
   localStorage.setItem("classes", JSON.stringify(classes))
 }
 
+/**
+ * Adds a new class to the list.
+ */
 function addClass() {
   const nameInput = document.getElementById("className")
   const name = nameInput.value.trim()
@@ -68,6 +82,9 @@ function addClass() {
   showNotification("Class added successfully!")
 }
 
+/**
+ * Renders the list of classes into the DOM.
+ */
 function renderClasses() {
   const container = document.getElementById("classesTable")
   const noClassesMsg = document.getElementById("noClasses")
@@ -107,6 +124,10 @@ function renderClasses() {
   container.innerHTML = html
 }
 
+/**
+ * Opens the edit modal for a specific class.
+ * @param {number} id - The ID of the class to edit.
+ */
 function editClass(id) {
   const cls = classes.find((c) => c.id === id)
   if (!cls) return
@@ -116,6 +137,9 @@ function editClass(id) {
   document.getElementById("editClassModal").style.display = "block"
 }
 
+/**
+ * Saves the changes made to a class in the edit modal.
+ */
 function saveEdit() {
   const newName = document.getElementById("editClassName").value.trim()
 
@@ -151,6 +175,10 @@ function saveEdit() {
   }
 }
 
+/**
+ * Deletes a class from the list.
+ * @param {number} id - The ID of the class to delete.
+ */
 function deleteClass(id) {
   const cls = classes.find((c) => c.id === id)
   if (!cls) return
@@ -182,11 +210,19 @@ function deleteClass(id) {
   showNotification("Class deleted successfully!")
 }
 
+/**
+ * Closes the edit class modal.
+ */
 function closeModal() {
   document.getElementById("editClassModal").style.display = "none"
   editingClassId = null
 }
 
+/**
+ * Shows a notification message.
+ * @param {string} message - The message to display.
+ * @param {string} [type="success"] - The type of notification ('success' or 'error').
+ */
 function showNotification(message, type = "success") {
   const notification = document.getElementById("notification")
   notification.textContent = message
@@ -198,29 +234,16 @@ function showNotification(message, type = "success") {
   }, 3000)
 }
 
-// Theme and sidebar functionality
-function initializeTheme() {
-  const savedTheme = localStorage.getItem("theme") || "light"
-  document.documentElement.setAttribute("data-theme", savedTheme)
-
-  const themeToggle = document.getElementById("themeToggle")
-  themeToggle.textContent = savedTheme === "dark" ? "☀️" : "🌙"
-
-  themeToggle.addEventListener("click", () => {
-    const currentTheme = document.documentElement.getAttribute("data-theme")
-    const newTheme = currentTheme === "dark" ? "light" : "dark"
-
-    document.documentElement.setAttribute("data-theme", newTheme)
-    localStorage.setItem("theme", newTheme)
-    themeToggle.textContent = newTheme === "dark" ? "☀️" : "🌙"
-  })
-}
-
+/**
+ * Sets up the sidebar toggle functionality.
+ */
 function setupSidebar() {
   const sidebar = document.getElementById("sidebar")
   const sidebarToggle = document.getElementById("sidebarToggle")
+  const mainContent = document.querySelector(".main-content")
 
   sidebarToggle.addEventListener("click", () => {
     sidebar.classList.toggle("collapsed")
+    mainContent.classList.toggle("expanded")
   })
 }

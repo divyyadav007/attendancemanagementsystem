@@ -8,6 +8,7 @@
 </head>
 <body>
     <div class="app-container">
+        <!-- Sidebar Navigation -->
         <aside class="sidebar" id="sidebar">
             <div class="sidebar-header">
                 <h2>AMS</h2>
@@ -35,13 +36,12 @@
                     <span class="nav-text">Classes</span>
                 </a>
             </nav>
-            <div class="sidebar-footer">
-                <button class="theme-toggle" id="themeToggle">🌙</button>
-            </div>
         </aside>
 
+        <!-- Main Content Area -->
         <main class="main-content">
             <header class="top-header">
+                <!-- Header with Title and Report Filters -->
                 <div class="header-content">
                     <h1>Attendance Reports</h1>
                     <div class="header-actions">
@@ -60,6 +60,7 @@
             </header>
 
             <div class="content-area">
+                <!-- Summary cards for the report -->
                 <div class="report-summary" id="reportSummary">
                     <div class="summary-cards">
                         <div class="summary-card present">
@@ -93,6 +94,7 @@
                     </div>
                 </div>
 
+                <!-- Detailed report table -->
                 <div class="report-details">
                     <h3 id="reportTitle">Detailed Report</h3>
                     <div id="reportTable">
@@ -105,6 +107,7 @@
         </main>
     </div>
 
+    <!-- Notification element for showing messages -->
     <div id="notification" class="notification"></div>
 
     <script src="reports.js"></script>

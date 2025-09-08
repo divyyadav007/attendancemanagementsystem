@@ -7,8 +7,9 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <!-- Added dark mode toggle and sidebar navigation -->
+    <!-- Main application container -->
     <div class="app-container">
+        <!-- Sidebar Navigation -->
         <aside class="sidebar" id="sidebar">
             <div class="sidebar-header">
                 <h2>AMS</h2>
@@ -36,13 +37,12 @@
                     <span class="nav-text">Classes</span>
                 </a>
             </nav>
-            <div class="sidebar-footer">
-                <button class="theme-toggle" id="themeToggle">🌙</button>
-            </div>
         </aside>
 
+        <!-- Main Content Area -->
         <main class="main-content">
             <header class="top-header">
+                <!-- Header with Page Title and Class Filter -->
                 <div class="header-content">
                     <h1>Dashboard</h1>
                     <div class="header-actions">
@@ -54,12 +54,14 @@
             </header>
 
             <div class="content-area">
+                <!-- Welcome message section -->
                 <div class="welcome-section">
                     <h2>Welcome to the Attendance Management System</h2>
                     <p>Manage student attendance efficiently and generate comprehensive reports.</p>
                 </div>
 
                 <div class="dashboard-grid">
+                    <!-- Statistics Overview Section -->
                     <div class="stats-overview">
                         <div class="stat-card">
                             <div class="stat-icon">👥</div>
@@ -91,6 +93,7 @@
                         </div>
                     </div>
 
+                    <!-- Quick Actions Section -->
                     <div class="quick-actions">
                         <h3>Quick Actions</h3>
                         <div class="action-buttons">
@@ -100,6 +103,7 @@
                         </div>
                     </div>
 
+                    <!-- Recent Activity Section -->
                     <div class="recent-activity">
                         <h3>Recent Activity</h3>
                         <div id="recentActivity" class="activity-list">

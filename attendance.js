@@ -5,14 +5,20 @@ let currentView = "list"
 let currentMonth = new Date().getMonth()
 let currentYear = new Date().getFullYear()
 
+/**
+ * Initializes the attendance page after the DOM is fully loaded.
+ */
 document.addEventListener("DOMContentLoaded", () => {
   loadStudents()
   loadClasses()
   setupEventListeners()
   setCurrentDate()
-  setupSidebarAndTheme()
-})
+  setupSidebar()
+});
 
+/**
+ * Sets up all event listeners for the attendance page.
+ */
 function setupEventListeners() {
   document.getElementById("attendanceDate").addEventListener("change", handleDateChange)
   document.getElementById("saveAttendanceBtn").addEventListener("click", saveAttendance)
@@ -28,36 +34,31 @@ function setupEventListeners() {
   document.getElementById("nextMonth").addEventListener("click", () => navigateMonth(1))
 }
 
-function setupSidebarAndTheme() {
+/**
+ * Sets up the sidebar toggle functionality.
+ */
+function setupSidebar() {
   const sidebarToggle = document.getElementById("sidebarToggle")
   const sidebar = document.getElementById("sidebar")
   const mainContent = document.querySelector(".main-content")
-  const themeToggle = document.getElementById("themeToggle")
 
   sidebarToggle.addEventListener("click", () => {
     sidebar.classList.toggle("collapsed")
     mainContent.classList.toggle("expanded")
   })
-
-  themeToggle.addEventListener("click", () => {
-    document.body.classList.toggle("dark-mode")
-    const isDark = document.body.classList.contains("dark-mode")
-    themeToggle.textContent = isDark ? "☀️" : "🌙"
-    localStorage.setItem("darkMode", isDark)
-  })
-
-  // Load saved theme
-  if (localStorage.getItem("darkMode") === "true") {
-    document.body.classList.add("dark-mode")
-    themeToggle.textContent = "☀️"
-  }
 }
 
+/**
+ * Loads student data from localStorage and renders the attendance table.
+ */
 function loadStudents() {
   students = JSON.parse(localStorage.getItem("students") || "[]")
   renderAttendanceTable()
 }
 
+/**
+ * Loads class data from localStorage and populates the class filter dropdown.
+ */
 function loadClasses() {
   const classes = JSON.parse(localStorage.getItem("classes") || "[]")
   const classFilter = document.getElementById("classFilterAttendance")
@@ -75,6 +76,9 @@ function loadClasses() {
   })
 }
 
+/**
+ * Sets the current date to today and loads any existing attendance for this date.
+ */
 function setCurrentDate() {
   const today = new Date().toISOString().split("T")[0]
   document.getElementById("attendanceDate").value = today
@@ -82,11 +86,17 @@ function setCurrentDate() {
   loadExistingAttendance()
 }
 
+/**
+ * Handles the change event of the date input.
+ */
 function handleDateChange() {
   currentDate = document.getElementById("attendanceDate").value
   loadExistingAttendance()
 }
 
+/**
+ * Renders the main attendance table with all students.
+ */
 function renderAttendanceTable() {
   const container = document.getElementById("attendanceTable")
   const noStudentsMsg = document.getElementById("noStudentsMessage")
@@ -140,6 +150,11 @@ function renderAttendanceTable() {
   loadExistingAttendance()
 }
 
+/**
+ * Ensures only one status checkbox (Present, Absent, Late) is checked per student.
+ * @param {number} studentId - The ID of the student.
+ * @param {string} status - The status that was just checked.
+ */
 function handleStatusChange(studentId, status) {
   // Uncheck other checkboxes for this student
   const checkboxes = document.querySelectorAll(`input[name="status_${studentId}"]`)
@@ -150,6 +165,9 @@ function handleStatusChange(studentId, status) {
   })
 }
 
+/**
+ * Filters the students displayed in the attendance table by the selected class.
+ */
 function filterByClass() {
   const selectedClass = document.getElementById("classFilterAttendance").value
   const filteredStudents = selectedClass ? students.filter((student) => student.class === selectedClass) : students
@@ -157,6 +175,10 @@ function filterByClass() {
   renderFilteredAttendanceTable(filteredStudents)
 }
 
+/**
+ * Renders the attendance table with a filtered list of students.
+ * @param {Array<Object>} filteredStudents - The array of student objects to render.
+ */
 function renderFilteredAttendanceTable(filteredStudents) {
   const container = document.getElementById("attendanceTable")
 
@@ -207,6 +229,9 @@ function renderFilteredAttendanceTable(filteredStudents) {
   loadExistingAttendance()
 }
 
+/**
+ * Loads and displays existing attendance records for the currently selected date.
+ */
 function loadExistingAttendance() {
   if (!currentDate) return
 
@@ -227,6 +252,9 @@ function loadExistingAttendance() {
   })
 }
 
+/**
+ * Saves the current attendance data to localStorage.
+ */
 function saveAttendance() {
   if (!currentDate) {
     showNotification("Please select a date", "error")
@@ -258,6 +286,9 @@ function saveAttendance() {
   showNotification("Attendance saved successfully!")
 }
 
+/**
+ * Marks all visible students as 'Present'.
+ */
 function markAllPresent() {
   students.forEach((student) => {
     const presentCheckbox = document.getElementById(`present_${student.id}`)
@@ -273,6 +304,9 @@ function markAllPresent() {
   showNotification("All students marked as present")
 }
 
+/**
+ * Marks all visible students as 'Absent'.
+ */
 function markAllAbsent() {
   students.forEach((student) => {
     const presentCheckbox = document.getElementById(`present_${student.id}`)
@@ -288,6 +322,10 @@ function markAllAbsent() {
   showNotification("All students marked as absent")
 }
 
+/**
+ * Switches between the list view and calendar view.
+ * @param {string} view - The view to switch to ('list' or 'calendar').
+ */
 function switchView(view) {
   currentView = view
   const listView = document.getElementById("listView")
@@ -309,6 +347,9 @@ function switchView(view) {
   }
 }
 
+/**
+ * Renders the calendar view, showing a monthly overview of attendance.
+ */
 function renderCalendar() {
   const calendar = document.getElementById("calendar")
   const monthHeader = document.getElementById("currentMonth")
@@ -377,6 +418,10 @@ function renderCalendar() {
   calendar.innerHTML = html
 }
 
+/**
+ * Handles clicking on a date in the calendar view.
+ * @param {string} dateStr - The selected date string (YYYY-MM-DD).
+ */
 function selectCalendarDate(dateStr) {
   document.getElementById("attendanceDate").value = dateStr
   currentDate = dateStr
@@ -384,6 +429,10 @@ function selectCalendarDate(dateStr) {
   loadExistingAttendance()
 }
 
+/**
+ * Navigates to the previous or next month in the calendar view.
+ * @param {number} direction - -1 for previous month, 1 for next month.
+ */
 function navigateMonth(direction) {
   currentMonth += direction
   if (currentMonth > 11) {
@@ -396,6 +445,11 @@ function navigateMonth(direction) {
   renderCalendar()
 }
 
+/**
+ * Shows a notification message.
+ * @param {string} message - The message to display.
+ * @param {string} [type="success"] - The type of notification ('success' or 'error').
+ */
 function showNotification(message, type = "success") {
   const notification = document.getElementById("notification")
   notification.textContent = message

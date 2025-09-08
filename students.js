@@ -2,13 +2,19 @@
 let students = []
 let editingStudentId = null
 
+/**
+ * Initializes the students page after the DOM is fully loaded.
+ */
 document.addEventListener("DOMContentLoaded", () => {
   loadStudents()
   loadClasses()
   setupEventListeners()
-  setupSidebarAndTheme()
-})
+  setupSidebar()
+});
 
+/**
+ * Sets up all event listeners for the students page.
+ */
 function setupEventListeners() {
   document.getElementById("addStudentBtn").addEventListener("click", addStudent)
 
@@ -29,36 +35,31 @@ function setupEventListeners() {
   })
 }
 
-function setupSidebarAndTheme() {
+/**
+ * Sets up the sidebar toggle functionality.
+ */
+function setupSidebar() {
   const sidebarToggle = document.getElementById("sidebarToggle")
   const sidebar = document.getElementById("sidebar")
   const mainContent = document.querySelector(".main-content")
-  const themeToggle = document.getElementById("themeToggle")
 
   sidebarToggle.addEventListener("click", () => {
     sidebar.classList.toggle("collapsed")
     mainContent.classList.toggle("expanded")
   })
-
-  themeToggle.addEventListener("click", () => {
-    document.body.classList.toggle("dark-mode")
-    const isDark = document.body.classList.contains("dark-mode")
-    themeToggle.textContent = isDark ? "☀️" : "🌙"
-    localStorage.setItem("darkMode", isDark)
-  })
-
-  // Load saved theme
-  if (localStorage.getItem("darkMode") === "true") {
-    document.body.classList.add("dark-mode")
-    themeToggle.textContent = "☀️"
-  }
 }
 
+/**
+ * Loads student data from localStorage and renders the list.
+ */
 function loadStudents() {
   students = JSON.parse(localStorage.getItem("students") || "[]")
   renderStudents()
 }
 
+/**
+ * Loads class data from localStorage and populates all class selection dropdowns.
+ */
 function loadClasses() {
   const classes = JSON.parse(localStorage.getItem("classes") || "[]")
   const classSelects = [
@@ -84,10 +85,16 @@ function loadClasses() {
   })
 }
 
+/**
+ * Saves the current list of students to localStorage.
+ */
 function saveStudents() {
   localStorage.setItem("students", JSON.stringify(students))
 }
 
+/**
+ * Adds a new student to the list.
+ */
 function addStudent() {
   const name = document.getElementById("studentName").value.trim()
   const roll = document.getElementById("studentRoll").value.trim()
@@ -140,6 +147,9 @@ function addStudent() {
   }
 }
 
+/**
+ * Clears all fields in the 'Add New Student' form.
+ */
 function clearForm() {
   document.getElementById("studentName").value = ""
   document.getElementById("studentRoll").value = ""
@@ -150,6 +160,9 @@ function clearForm() {
   document.getElementById("studentPhoto").value = ""
 }
 
+/**
+ * Renders the list of all students into the DOM.
+ */
 function renderStudents() {
   const container = document.getElementById("studentsTable")
   const noStudentsMsg = document.getElementById("noStudents")
@@ -188,6 +201,9 @@ function renderStudents() {
   container.innerHTML = html
 }
 
+/**
+ * Filters the displayed students based on search term and class selection.
+ */
 function filterStudents() {
   const searchTerm = document.getElementById("searchStudent").value.toLowerCase()
   const classFilter = document.getElementById("classFilterStudents").value
@@ -203,6 +219,10 @@ function filterStudents() {
   renderFilteredStudents(filteredStudents)
 }
 
+/**
+ * Renders a filtered list of students into the DOM.
+ * @param {Array<Object>} filteredStudents - The array of student objects to render.
+ */
 function renderFilteredStudents(filteredStudents) {
   const container = document.getElementById("studentsTable")
 
@@ -239,6 +259,10 @@ function renderFilteredStudents(filteredStudents) {
   container.innerHTML = html
 }
 
+/**
+ * Opens the edit modal and populates it with the data of a specific student.
+ * @param {number} id - The ID of the student to edit.
+ */
 function editStudent(id) {
   const student = students.find((s) => s.id === id)
   if (!student) return
@@ -262,6 +286,9 @@ function editStudent(id) {
   document.getElementById("editModal").style.display = "block"
 }
 
+/**
+ * Saves the changes made to a student in the edit modal.
+ */
 function saveEdit() {
   const name = document.getElementById("editStudentName").value.trim()
   const roll = document.getElementById("editStudentRoll").value.trim()
@@ -320,6 +347,10 @@ function saveEdit() {
   }
 }
 
+/**
+ * Deletes a student from the list.
+ * @param {number} id - The ID of the student to delete.
+ */
 function deleteStudent(id) {
   if (confirm("Are you sure you want to delete this student? This will also remove all their attendance records.")) {
     students = students.filter((s) => s.id !== id)
@@ -329,11 +360,19 @@ function deleteStudent(id) {
   }
 }
 
+/**
+ * Closes the edit student modal.
+ */
 function closeModal() {
   document.getElementById("editModal").style.display = "none"
   editingStudentId = null
 }
 
+/**
+ * Shows a notification message.
+ * @param {string} message - The message to display.
+ * @param {string} [type="success"] - The type of notification ('success' or 'error').
+ */
 function showNotification(message, type = "success") {
   const notification = document.getElementById("notification")
   notification.textContent = message

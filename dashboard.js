@@ -1,12 +1,18 @@
 // Enhanced dashboard functionality with sidebar and theme toggle
+
+/**
+ * Initializes the dashboard page after the DOM is fully loaded.
+ */
 document.addEventListener("DOMContentLoaded", () => {
   initializeSidebar()
-  initializeThemeToggle()
   loadClassFilter()
   loadDashboardStats()
   loadRecentActivity()
-})
+});
 
+/**
+ * Sets up the sidebar toggle functionality for both mobile and desktop views.
+ */
 function initializeSidebar() {
   const sidebar = document.getElementById("sidebar")
   const sidebarToggle = document.getElementById("sidebarToggle")
@@ -34,23 +40,9 @@ function initializeSidebar() {
   })
 }
 
-function initializeThemeToggle() {
-  const themeToggle = document.getElementById("themeToggle")
-  const currentTheme = localStorage.getItem("theme") || "light"
-
-  if (currentTheme === "dark") {
-    document.body.classList.add("dark-mode")
-    themeToggle.textContent = "☀️"
-  }
-
-  themeToggle.addEventListener("click", () => {
-    document.body.classList.toggle("dark-mode")
-    const isDark = document.body.classList.contains("dark-mode")
-    themeToggle.textContent = isDark ? "☀️" : "🌙"
-    localStorage.setItem("theme", isDark ? "dark" : "light")
-  })
-}
-
+/**
+ * Loads class data from localStorage and populates the class filter dropdown.
+ */
 function loadClassFilter() {
   const classes = JSON.parse(localStorage.getItem("classes") || "[]")
   const classFilter = document.getElementById("classFilter")
@@ -58,14 +50,17 @@ function loadClassFilter() {
   classFilter.innerHTML = '<option value="">All Classes</option>'
   classes.forEach((cls) => {
     const option = document.createElement("option")
-    option.value = cls.id
-    option.textContent = `${cls.name} - ${cls.section}`
+    option.value = cls.name
+    option.textContent = cls.name
     classFilter.appendChild(option)
   })
 
   classFilter.addEventListener("change", loadDashboardStats)
 }
 
+/**
+ * Loads student and attendance data to calculate and display dashboard statistics.
+ */
 function loadDashboardStats() {
   const students = JSON.parse(localStorage.getItem("students") || "[]")
   const selectedClass = document.getElementById("classFilter").value
@@ -73,7 +68,7 @@ function loadDashboardStats() {
   const todayAttendance = JSON.parse(localStorage.getItem(`attendance_${today}`) || "[]")
 
   // Filter students by class if selected
-  const filteredStudents = selectedClass ? students.filter((student) => student.classId === selectedClass) : students
+  const filteredStudents = selectedClass ? students.filter((student) => student.class === selectedClass) : students
 
   // Update total students
   document.getElementById("totalStudents").textContent = filteredStudents.length
@@ -87,7 +82,7 @@ function loadDashboardStats() {
     const filteredAttendance = selectedClass
       ? todayAttendance.filter((record) => {
           const student = students.find((s) => s.id === record.studentId)
-          return student && student.classId === selectedClass
+          return student && student.class === selectedClass
         })
       : todayAttendance
 
@@ -115,6 +110,9 @@ function loadDashboardStats() {
   document.getElementById("lateToday").textContent = lateCount
 }
 
+/**
+ * Loads and displays the most recent activities from localStorage.
+ */
 function loadRecentActivity() {
   const recentActivity = document.getElementById("recentActivity")
   const activities = JSON.parse(localStorage.getItem("recentActivities") || "[]")
@@ -139,6 +137,10 @@ function loadRecentActivity() {
   recentActivity.innerHTML = activityHTML
 }
 
+/**
+ * Adds a new activity to the recent activities list in localStorage.
+ * @param {string} text - The description of the activity.
+ */
 function addActivity(text) {
   const activities = JSON.parse(localStorage.getItem("recentActivities") || "[]")
   activities.unshift({
@@ -154,6 +156,11 @@ function addActivity(text) {
   localStorage.setItem("recentActivities", JSON.stringify(activities))
 }
 
+/**
+ * Formats a timestamp into a human-readable "time ago" string.
+ * @param {string} timestamp - The ISO string of the date to format.
+ * @returns {string} A formatted string like "Just now", "5m ago", "2h ago", or "1d ago".
+ */
 function formatTime(timestamp) {
   const date = new Date(timestamp)
   const now = new Date()

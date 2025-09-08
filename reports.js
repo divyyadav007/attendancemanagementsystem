@@ -1,15 +1,24 @@
 // Reports functionality
 let currentDate = ""
 
+/**
+ * Initializes the reports page after the DOM is fully loaded.
+ */
 document.addEventListener("DOMContentLoaded", () => {
   setupEventListeners()
   setCurrentDate()
-})
+});
 
+/**
+ * Sets up event listeners for the reports page.
+ */
 function setupEventListeners() {
   document.getElementById("reportDate").addEventListener("change", handleDateChange)
 }
 
+/**
+ * Sets the current date to today and loads the report.
+ */
 function setCurrentDate() {
   const today = new Date().toISOString().split("T")[0]
   document.getElementById("reportDate").value = today
@@ -17,6 +26,9 @@ function setCurrentDate() {
   loadReport()
 }
 
+/**
+ * Handles the change event of the date input to load a new report.
+ */
 function handleDateChange() {
   currentDate = document.getElementById("reportDate").value
   loadReport()
@@ -36,6 +48,10 @@ function loadReport() {
   renderReportTable(attendanceData)
 }
 
+/**
+ * Calculates and displays the summary of attendance data (present, absent, late).
+ * @param {Array<Object>} attendanceData - The attendance records for a specific date.
+ */
 function calculateSummary(attendanceData) {
   let presentCount = 0
   let absentCount = 0
@@ -62,6 +78,10 @@ function calculateSummary(attendanceData) {
   document.getElementById("reportSummary").style.display = "block"
 }
 
+/**
+ * Renders the detailed report table with student attendance statuses.
+ * @param {Array<Object>} attendanceData - The attendance records for a specific date.
+ */
 function renderReportTable(attendanceData) {
   const container = document.getElementById("reportTable")
   const noDataMsg = document.getElementById("noDataMessage")
@@ -92,6 +112,9 @@ function renderReportTable(attendanceData) {
   container.innerHTML = html
 }
 
+/**
+ * Shows a message when no attendance data is found for the selected date.
+ */
 function showNoDataMessage() {
   document.getElementById("reportSummary").style.display = "none"
   document.getElementById("noDataMessage").style.display = "block"
